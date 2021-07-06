@@ -3,9 +3,7 @@
 export default function indexslider(wrapper,config) {
 
     //Desestructuro la configuracion
-    const { touchX, touchY, keys, stickIndicatorsTo, mousewheel, speed, indicators, arrows, loop } = config;
-
-    console.table(touchX, touchY, keys, stickIndicatorsTo);
+    const { touch, touchY, keys, stickIndicatorsTo, mousewheel, speed, indicators, arrows, autoLoop } = config;
 
 
     //------ Elements ------//
@@ -20,16 +18,17 @@ export default function indexslider(wrapper,config) {
     let counter = 1;
     //Ancho inicial del primer slide
     let size = slides[0].clientWidth;
-    //Ancho de pantalla, para solo llamar a la funcion de scroll con wheel arriba de los 1200px
-    let screenWidth = window.innerWidth;
     //Creo indicadores segun cantidad de slides agregados
     indicators && createIndicators();
     //Creo flechas 
     arrows && createArrows();
     //Auto loop
-    loop !== false && autoLoop(loop);
+    autoLoop !== false && setInterval(() => { nextSlide() }, autoLoop);
+    //Scroll on touch
+    touch && ontouchCarousel(slider);
     //Centro vista en slide numero 1
     centerSlideOne(counter);
+
 
 
     //------ EventListeners ------//
@@ -38,7 +37,6 @@ export default function indexslider(wrapper,config) {
     window.addEventListener('resize', () => {
         size = slides[0].clientWidth;
         centerSlide(size, counter);
-        screenWidth = window.innerWidth;
         stickIndicatorsTo && locateIndicator();
     } );
     //Reseteo transicion cuando llego a un clon y salto al original
@@ -306,7 +304,7 @@ export default function indexslider(wrapper,config) {
 
     };
 
-    (function ontouchCarousel(elemento) {
+    function ontouchCarousel(elemento) {
         let x1;
         let x2;
         
@@ -316,8 +314,10 @@ export default function indexslider(wrapper,config) {
 
         elemento.addEventListener('touchstart', function(event){
 
-            const btnHref = event.path[0].href;
-            const btnTarget = event.path[0].target;
+            console.log(event);
+
+            const btnHref = event.target.href;
+            const btnTarget = event.target.target;
 
             if ( btnHref !== undefined ) {
 
@@ -329,7 +329,7 @@ export default function indexslider(wrapper,config) {
             let touchobj = event.changedTouches[0];
             x1 = parseInt(touchobj.clientX);
 
-            if(config.touchY === true){
+            if ( touchY === true ) {
                 event.preventDefault();
             }
             
@@ -378,15 +378,6 @@ export default function indexslider(wrapper,config) {
             }
         });
 
-    })(slider);
-
-    function autoLoop(autoLoop) {
-        // const loopInterval = setInterval(() => {
-        //     nextSlide();
-        // }, autoLoop);
-        
-        // return () => {
-        //     clearInterval(loopInterval);
-        // }
-    }
+    };
+ 
 }
