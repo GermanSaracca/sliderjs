@@ -1,28 +1,71 @@
-*{
+//---Estilados solo para muestra---//
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+//---Estilados solo para muestra---//
+body {
+    display: grid;
+    place-items: center;
+    background-color: rgb(111, 57, 90);
+    padding-top: 1rem;
+
+    @media (min-width: 768px ) {
+        padding-top: 5rem;
+    }
 }
 
 .slider-container {
     overflow-x: hidden;
     position: relative;
     height: 100%;
+
+    box-shadow: 0 0 2rem 1rem rgb(0, 0, 0, 0.35);// Solo para estilar la muestra
     
     .slides-container {
-        display: flex;
+        display: flex;//Obligatorio
         width: 100%;
         height: 100%;
+
+        width: 90vw; // Solo para estilar la muestra, tomaria el ancho que se le de o que herede de un contenedor padre
+        height: 90vh;// Solo para estilar la muestra, tomaria el ancho que se le de o que herede de un contenedor padre
+
+        @media (min-width: 768px ) {
+            width: 70vw; // Solo para estilar la muestra, tomaria el ancho que se le de o que herede de un contenedor padre
+            height: 80vh;// Solo para estilar la muestra, tomaria el ancho que se le de o que herede de un contenedor padre
+        }
     
         .slide {
             min-width: 100%;
+
+            
+            display: flex;// Solo para estilar la muestra,
+            flex-direction: column;// Solo para estilar la muestra,
+            justify-content: space-evenly;// Solo para estilar la muestra,
+            align-items: center;// Solo para estilar la muestra,
+            font-size: 1rem;// Solo para estilar la muestra,
+            font-family: monospace,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;// Solo para estilar la muestra,
+            color: #fff;// Solo para estilar la muestra,
+            background-color: rgb(174, 196, 192);// Solo para estilar la muestra,
+
+            img {
+                width: 100%;// Solo para estilar la muestra,
+                height: 100%;// Solo para estilar la muestra,
+            }
+            
+            @media (min-width: 768px ) {
+                font-size: 3rem;// Solo para estilar la muestra,
+            }
+
 
             &.active-slide {
                 //Para aplicar alguna animacion, efecto u accion cuando el slide esta activo / en vista
             }
         }
     }
-    
+    //Necesario si se usan indicadores
     .indicators-wrapper {
         display: flex;
         height: -webkit-fit-content;
@@ -47,7 +90,7 @@
             }
         }
     }
-
+    //Necesario si se usan flechas
     .arrow-left {
         position: absolute;
         top: 50%;
@@ -59,6 +102,7 @@
         background-color: transparent;
         border: 0;
         outline: 0;
+        padding: 0 1rem;
 
         &:active {
             color: rgb(111, 57, 90);
@@ -70,70 +114,35 @@
         top: 50%;
         right: 0;
     }
-}
 
-
-//---Estilados solo para muestra---//
-body {
-    display: grid;
-    place-items: center;
-    background-color: rgb(111, 57, 90);
-    padding-top: 1rem;
-
-    @media (min-width: 768px ) {
-        padding-top: 5rem;
-    }
-}
-.slider-container {
-    width: 90vw;
-    height: 90vh;
-    box-shadow: 0 0 2rem 1rem rgb(0, 0, 0, 0.35);
-
-    @media (min-width: 768px ) {
-        width: 70vw;
-        height: 80vh;
-    }
-
-    .slides-container {
-        .slide {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            font-size: 1rem;
-            font-family: monospace,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            color: #fff;
-            background-color: rgb(174, 196, 192);
-
-            @media (min-width: 768px ) {
-                font-size: 3rem;
-            }
-
-            .btn {
-                font-family: monospace,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-                font-size: .75rem;
-                color: white;
-                background-color: #800080;
-                padding: 1rem 2rem;
-                outline: 0;
-                border: 0;
-                border-radius: 12px;
-                cursor: pointer;
-                transition: 250ms ease-out;
-
-                @media (min-width: 768px ) {
-                    font-size: 1.25rem;
-                }
-
-                &:nth-child(2) {
-                    transform: translateY(-60px);
-                }
-                
-                &:hover{
-                    box-shadow: 0 0 0 3px white, 0 0 0 6px #800080;
-                }
-            }
+    //Solo para muestra
+    .btn {
+        font-family: monospace,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: .75rem;
+        color: white;
+        background-color: #800080;
+        padding: 1rem 2rem;
+        outline: 0;
+        border: 0;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 250ms ease-out;
+    
+        @media (min-width: 768px ) {
+            font-size: 1.25rem;
+        }
+    
+        &:nth-child(2) {
+            transform: translateY(-60px);
+        }
+        
+        &:hover{
+            box-shadow: 0 0 0 3px white, 0 0 0 6px #800080;
         }
     }
 }
+
+
+
+
 

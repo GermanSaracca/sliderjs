@@ -3,13 +3,12 @@
 export default function indexslider(wrapper,config) {
 
     //Desestructuro la configuracion
-    const { touch, touchY, keys, stickIndicatorsTo, mousewheel, speed, indicators, arrows, autoLoop } = config;
+    const { touch, touchY, keys, stickIndicatorsTo, mousewheel, speed, indicators, autoLoop } = config;
 
 
     //------ Elements ------//
     const slider = wrapper.querySelector('.slides-container');
     const originalSlides = [...wrapper.querySelectorAll('.slide')];
-    // document.querySelector('body').style.overflow = "hidden";
 
 
     //Actualizo los slide originales mas los clones
@@ -20,8 +19,8 @@ export default function indexslider(wrapper,config) {
     let size = slides[0].clientWidth;
     //Creo indicadores segun cantidad de slides agregados
     indicators && createIndicators();
-    //Creo flechas 
-    arrows && createArrows();
+    //Arrows listeners solo si existen dentro del wrapper
+    arrowsListeners();
     //Auto loop
     autoLoop !== false && setInterval(() => { nextSlide() }, autoLoop);
     //Scroll on touch
@@ -82,21 +81,6 @@ export default function indexslider(wrapper,config) {
         // Cancel the default action to avoid it being handled twice
         event.preventDefault();
     }, true);
-
-    //Toma como parametro el elemento a evitar click en slider ( con la posicion de uno solo basta)
-    // var initialX,finishX,initialY,finishY;
-    // function avoidTouchOnElement(elemento){
-
-    //     const boundings = elemento.getBoundingClientRect();
-
-    //     initialX = Math.floor(boundings.x);
-    //     finishX = Math.floor(boundings.x) + Math.floor(boundings.width);
-    //     initialY = Math.floor(boundings.y);
-    //     finishY = Math.floor(boundings.y) + Math.floor(boundings.height);
-    // }
-    
-    // avoidTouchOnElement(ctaButtonSlider);
-
     
     //------ Functions ------//
 
@@ -183,20 +167,11 @@ export default function indexslider(wrapper,config) {
         stickIndicatorsTo !== false && locateIndicator();
     };
 
-    function createArrows() {
+    function arrowsListeners() {
 
-        let buttonLeft = document.createElement('button');
-        buttonLeft.className = 'arrow-left';
-        buttonLeft.textContent = "⬅";
-        buttonLeft.addEventListener('click',prevSlide);
+        wrapper.querySelector('.arrow-left') !== null && wrapper.querySelector('.arrow-left').addEventListener('click',prevSlide);
+        wrapper.querySelector('.arrow-right')!== null && wrapper.querySelector('.arrow-right').addEventListener('click',nextSlide);
 
-        let buttonRight = document.createElement('button');
-        buttonRight.className = 'arrow-right';
-        buttonRight.textContent = "⮕";
-        buttonRight.addEventListener('click',nextSlide);
-
-        wrapper.appendChild(buttonLeft);
-        wrapper.appendChild(buttonRight);
     }
 
     function goToSlide(slideIndex) {
@@ -313,8 +288,6 @@ export default function indexslider(wrapper,config) {
         
 
         elemento.addEventListener('touchstart', function(event){
-
-            console.log(event);
 
             const btnHref = event.target.href;
             const btnTarget = event.target.target;
